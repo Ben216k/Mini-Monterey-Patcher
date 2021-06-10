@@ -41,7 +41,7 @@ echo 'Installer USB Detected!'
 
 echo
 
-echo 'Detecting patches at /usr/local/lib/Patched-Sur-Patches...'
+echo 'Detecting patches at script directory...'
 
 PATCHES="$(dirname $0)"
 
@@ -58,17 +58,17 @@ echo
 
 if [[ "$1" == "--no-setvars" ]]; then
 
-    MOUNTEDPARTITION=`mount | fgrep "$VOLUME" | awk '{print $1}'`
+    MOUNTEDPARTITION=`mount | fgrep "$INSTALLER" | awk '{print $1}'`
     if [[ -z "$MOUNTEDPARTITION" ]]; then
         echo Failed to find the partition that
-        echo "$VOLUME"
+        echo "$INSTALLER"
 s        echo is mounted from.
         exit 1
     fi
 
     DEVICE=`echo -n $MOUNTEDPARTITION | sed -e 's/s[0-9]*$//'`
     PARTITION=`echo -n $MOUNTEDPARTITION | sed -e 's/^.*disk[0-9]*s//'`
-    echo "$VOLUME found on device $MOUNTEDPARTITION"
+    echo "$INSTALLER found on device $MOUNTEDPARTITION"
 
     if [[ "x$PARTITION" = "x1" ]]; then
         error 'This drive is not formatted with a GUID Partition Map'
@@ -84,9 +84,8 @@ echo 'Patching Boot PLIST...'
 # but I guess there is some sort of permissions trick
 # that makes this better.
 
-if [ ! -e "$VOLUME/Library/Preferences/SystemConfiguration/com.apple.Boot.plist.stock" ]
-then
-    cp "$VOLUME/Library/Preferences/SystemConfiguration/com.apple.Boot.plist" "$VOLUME/Library/Preferences/SystemConfiguration/com.apple.Boot.plist.stock" || error 'Error 2x2 Unable backup boot plist.'
+if [[ ! -e "$INSTALLER/Library/Preferences/SystemConfiguration/com.apple.Boot.plist.stock" ]]; then
+    cp "$INSTALLER/Library/Preferences/SystemConfiguration/com.apple.Boot.plist" "$INSTALLER/Library/Preferences/SystemConfiguration/com.apple.Boot.plist.stock" || error 'Error 2x2 Unable backup boot plist.'
 fi
 
 cat "$PATCHES/InstallerPatches/com.apple.Boot.plist" > "$INSTALLER/Library/Preferences/SystemConfiguration/com.apple.Boot.plist" || error 'Error 2x2 Unable replace boot plist.'
@@ -193,7 +192,7 @@ echo 'Now installing SetVars tool...'
 checkDirAccess() {
     # List the two directories, but direct both stdout and stderr to
     # /dev/null. We are only interested in the return code.
-    ls "$VOLUME" . &> /dev/null
+    ls "$INSTALLER" . &> /dev/null
 }
 
 # Make sure there isn't already an "EFI" volume mounted.
