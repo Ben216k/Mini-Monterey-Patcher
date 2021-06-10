@@ -56,7 +56,7 @@ echo
 
 # MARK: Verifying thing
 
-if [[ "$1" == "--no-setvars" ]]; then
+if [[ ! "$1" == "--no-setvars" ]]; then
 
     MOUNTEDPARTITION=`mount | fgrep "$INSTALLER" | awk '{print $1}'`
     if [[ -z "$MOUNTEDPARTITION" ]]; then
@@ -189,90 +189,94 @@ echo 'Now installing SetVars tool...'
 
 # This code is from the micropatcher.
 
-checkDirAccess() {
-    # List the two directories, but direct both stdout and stderr to
-    # /dev/null. We are only interested in the return code.
-    ls "$INSTALLER" . &> /dev/null
-}
+if [[ ! "$1" == "--no-setvars" ]]; then
+    
+    checkDirAccess() {
+        # List the two directories, but direct both stdout and stderr to
+        # /dev/null. We are only interested in the return code.
+        ls "$INSTALLER" . &> /dev/null
+    }
 
-# Make sure there isn't already an "EFI" volume mounted.
-if [ -d "/Volumes/EFI" ]
-then
-    echo 'An "EFI" volume is already mounted. Please unmount it then try again.'
-    echo "If you don't know what this means, then restart your Mac and try again."
-    echo
-    error 'EFI Volume already mounted.'
-fi
-
-cd $PATCHES
-
-# Check again in case we changed directory after the first check
-if [ ! -d EFISetvars ]
-then
-    error '"EFISetvars" folder was not founnd'
-fi
-
-# Check to make sure we can access both our own directory and the root
-# directory of the USB stick.
-if [ `uname -r | sed -e 's@\..*@@'` -ge 19 ]
-then
-    echo 'Checking read access to necessary directories...'
-    if ! checkDirAccess
+    # Make sure there isn't already an "EFI" volume mounted.
+    if [ -d "/Volumes/EFI" ]
     then
-        echo 'Access check failed.'
-        tccutil reset All com.apple.Terminal
-        echo 'Retrying access check...'
+        echo 'An "EFI" volume is already mounted. Please unmount it then try again.'
+        echo "If you don't know what this means, then restart your Mac and try again."
+        echo
+        error 'EFI Volume already mounted.'
+    fi
+
+    cd $PATCHES
+
+    # Check again in case we changed directory after the first check
+    if [ ! -d EFISetvars ]
+    then
+        error '"EFISetvars" folder was not founnd'
+    fi
+
+    # Check to make sure we can access both our own directory and the root
+    # directory of the USB stick.
+    if [ `uname -r | sed -e 's@\..*@@'` -ge 19 ]
+    then
+        echo 'Checking read access to necessary directories...'
         if ! checkDirAccess
         then
-            echo
-            error 'Error 2x9 Terminal does not have the correct permissions, please give it Full Disk Access.'
+            echo 'Access check failed.'
+            tccutil reset All com.apple.Terminal
+            echo 'Retrying access check...'
+            if ! checkDirAccess
+            then
+                echo
+                error 'Error 2x9 Terminal does not have the correct permissions, please give it Full Disk Access.'
+            else
+                echo 'Access check succeeded on second attempt.'
+                echo
+            fi
         else
-            echo 'Access check succeeded on second attempt.'
+            echo 'Access check succeeded.'
             echo
         fi
-    else
-        echo 'Access check succeeded.'
-        echo
     fi
-fi
 
-diskutil mount ${DEVICE}s1
-if [[ ! -d "/Volumes/EFI" ]]; then
-    echo "Partition 1 of the USB stick does not appear to be an EFI partition, or"
-    echo "mounting of the partition somehow failed."
-    error 'Error 2x2 Could not find (or mount?) the EFI partition of this device.'
-fi
+    diskutil mount ${DEVICE}s1
+    if [[ ! -d "/Volumes/EFI" ]]; then
+        echo "Partition 1 of the USB stick does not appear to be an EFI partition, or"
+        echo "mounting of the partition somehow failed."
+        error 'Error 2x2 Could not find (or mount?) the EFI partition of this device.'
+    fi
 
-echo 'The patcher is unfinished, so just leaving SIP on'
-SIPARV="YES"
+    echo 'The patcher is unfinished, so just leaving SIP on'
+    SIPARV="YES"
 
-# Now do the actual installation
-echo "Installing setvars EFI utility."
-rm -rf /Volumes/EFI/EFI
-if [ "x$VERBOSEBOOT" = "xYES" ]
-then
-    if [ "x$SIPARV" = "xYES" ]
+    # Now do the actual installation
+    echo "Installing setvars EFI utility."
+    rm -rf /Volumes/EFI/EFI
+    if [ "x$VERBOSEBOOT" = "xYES" ]
     then
-        echo 'Verbose boot enabled, SIP/ARV enabled'
-#         cp -r EFISetvars/EFI-enablesiparv-vb /Volumes/EFI/EFI
+        if [ "x$SIPARV" = "xYES" ]
+        then
+            echo 'Verbose boot enabled, SIP/ARV enabled'
+    #         cp -r EFISetvars/EFI-enablesiparv-vb /Volumes/EFI/EFI
+        else
+    #         echo 'Verbose boot enabled, SIP/ARV disabled'
+            cp -r EFISetvars/EFI-verboseboot /Volumes/EFI/EFI
+        fi
+    elif [ "x$SIPARV" = "xYES" ]
+    then
+    #     echo 'Verbose boot disabled, SIP/ARV enabled'
+        cp -r EFISetvars/EFI-enablesiparv /Volumes/EFI/EFI
     else
-#         echo 'Verbose boot enabled, SIP/ARV disabled'
-        cp -r EFISetvars/EFI-verboseboot /Volumes/EFI/EFI
+    #     echo 'Verbose boot disabled, SIP/ARV disabled'
+        cp -r EFISetvars/EFI /Volumes/EFI/EFI
     fi
-elif [ "x$SIPARV" = "xYES" ]
-then
-#     echo 'Verbose boot disabled, SIP/ARV enabled'
-    cp -r EFISetvars/EFI-enablesiparv /Volumes/EFI/EFI
-else
-#     echo 'Verbose boot disabled, SIP/ARV disabled'
-    cp -r EFISetvars/EFI /Volumes/EFI/EFI
+
+    echo 'Adding icons...'
+    cp -rf $PATCHES/Images/EFIIcon.icns /Volumes/EFI/.VolumeIcon.icns
+
+    echo "Unmounting EFI volume if we can..."
+    umount /Volumes/EFI || diskutil unmount /Volumes/EFI
+
 fi
-
-echo 'Adding icons...'
-cp -rf $PATCHES/Images/EFIIcon.icns /Volumes/EFI/.VolumeIcon.icns
-
-echo "Unmounting EFI volume if we can..."
-umount /Volumes/EFI || diskutil unmount /Volumes/EFI
 
 echo
 echo 'Mini Monterey PatchUSB.sh has finished. Refer to the README for instruction on how to continue.'
