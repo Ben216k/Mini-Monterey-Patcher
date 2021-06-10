@@ -28,14 +28,12 @@ echo
 
 echo 'Detecting Installer USB at /Volumes/Install macOS 12 Beta...'
 
-if [ -d '/Volumes/Install macOS 12 Beta/Install macOS 12 Beta.app' ]
-then
+if [[ -d '/Volumes/Install macOS 12 Beta/Install macOS 12 Beta.app' ]]; then
     INSTALLER='/Volumes/Install macOS 12 Beta'
     APPPATH="$INSTALLER/Install macOS 12 Beta.app"
 else
     echo 'Installer USB was not detected.'
-    echo 'Please be sure to not rename the USB before'
-    echo 'running patch-usb.sh.'
+    echo 'Please be sure to not rename the USB'
     error 'Error 2x1: Installer Not Found'
 fi
 
@@ -47,11 +45,10 @@ echo 'Detecting patches at /usr/local/lib/Patched-Sur-Patches...'
 
 PATCHES="$(dirname $0)"
 
-if [ ! -d "$PATCHES/InstallerPatches" ]
-then
+if [[ ! -d "$PATCHES/InstallerPatches" ]]; then
     echo 'The patches for Mini Monterey could not be found.'
-    echo 'There's really no logical explaination for this...'
-    error 'Error 2x1 The Patchess Weren't Found'
+    echo "Theres really no logical explaination for this..."
+    error "Error 2x1 The Patches Weren't Found"
 fi
 
 echo
@@ -59,22 +56,24 @@ echo
 
 # MARK: Verifying thing
 
-MOUNTEDPARTITION=`mount | fgrep "$VOLUME" | awk '{print $1}'`
-if [ -z "$MOUNTEDPARTITION" ]
-then
-    echo Failed to find the partition that
-    echo "$VOLUME"
-    echo is mounted from.
-    exit 1
-fi
+if [[ "$1" == "--no-setvars" ]]; then
 
-DEVICE=`echo -n $MOUNTEDPARTITION | sed -e 's/s[0-9]*$//'`
-PARTITION=`echo -n $MOUNTEDPARTITION | sed -e 's/^.*disk[0-9]*s//'`
-echo "$VOLUME found on device $MOUNTEDPARTITION"
+    MOUNTEDPARTITION=`mount | fgrep "$VOLUME" | awk '{print $1}'`
+    if [[ -z "$MOUNTEDPARTITION" ]]; then
+        echo Failed to find the partition that
+        echo "$VOLUME"
+s        echo is mounted from.
+        exit 1
+    fi
 
-if [ "x$PARTITION" = "x1" ]
-then
-    error 'This drive is not formatted with a GUID Partition Map'
+    DEVICE=`echo -n $MOUNTEDPARTITION | sed -e 's/s[0-9]*$//'`
+    PARTITION=`echo -n $MOUNTEDPARTITION | sed -e 's/^.*disk[0-9]*s//'`
+    echo "$VOLUME found on device $MOUNTEDPARTITION"
+
+    if [[ "x$PARTITION" = "x1" ]]; then
+        error 'This drive is not formatted with a GUID Partition Map'
+    fi
+
 fi
 
 # MARK: Patch Boot PLIST
@@ -203,8 +202,7 @@ then
     echo 'An "EFI" volume is already mounted. Please unmount it then try again.'
     echo "If you don't know what this means, then restart your Mac and try again."
     echo
-    echo "install-setvars cannot continue."
-    exit 1
+    error 'EFI Volume already mounted.'
 fi
 
 cd $PATCHES
@@ -216,11 +214,7 @@ then
 fi
 
 # Check to make sure we can access both our own directory and the root
-# directory of the USB stick. Terminal's TCC permissions in Catalina can
-# prevent access to either of those two directories. However, only do this
-# check on Catalina or higher. (I can add an "else" block later to handle
-# Mojave and earlier, but Catalina is responsible for every single bug
-# report I've received due to this script lacking necessary read permissions.)
+# directory of the USB stick.
 if [ `uname -r | sed -e 's@\..*@@'` -ge 19 ]
 then
     echo 'Checking read access to necessary directories...'
@@ -232,10 +226,7 @@ then
         if ! checkDirAccess
         then
             echo
-            echo 'Access check failed again. Giving up.'
-            echo 'Next time, please give Terminal permission to access removable drives,'
-            echo 'as well as the location where this patcher is stored (for example, Downloads).'
-            exit 1
+            error 'Error 2x9 Terminal does not have the correct permissions, please give it Full Disk Access.'
         else
             echo 'Access check succeeded on second attempt.'
             echo
@@ -247,42 +238,14 @@ then
 fi
 
 diskutil mount ${DEVICE}s1
-if [ ! -d "/Volumes/EFI" ]
-then
+if [[ ! -d "/Volumes/EFI" ]]; then
     echo "Partition 1 of the USB stick does not appear to be an EFI partition, or"
     echo "mounting of the partition somehow failed."
-    echo
-    echo 'Please use Disk Utility to erase the USB stick as "Mac OS Extended'
-    echo '(Journaled)" format on "GUID Partition Map" scheme and start over with'
-    echo '"createinstallmedia". Or for other methods, please refer to the micropatcher'
-    echo "README for more information."
-    echo
-    echo "install-setvars cannot continue."
-    exit 1
+    error 'Error 2x2 Could not find (or mount?) the EFI partition of this device.'
 fi
 
-# Before proceeding with the actual installation, see if we were provided
-# a command line option for SIP/ARV, and if not, make a decision based
-# on what Mac model this is.
-if [ -z "$SIPARV" ]
-then
-    MACMODEL=`sysctl -n hw.model`
-    echo "Detected Mac model is:" $MACMODEL
-    case $MACMODEL in
-    "iMac14,1" | "iMac14,2" | "iMac14,3")
-        echo "Late 2013 iMac detected, so enabling SIP/ARV."
-        echo "(Use -d option to disable SIP/ARV if necessary.)"
-        SIPARV="YES"
-        ;;
-    *)
-        echo "This Mac is not a Late 2013 iMac, so disabling SIP/ARV."
-        echo "(Use -e option to enable SIP/ARV if necessary.)"
-        SIPARV="NO"
-        ;;
-    esac
-
-    echo
-fi
+echo 'The patcher is unfinished, so just leaving SIP on'
+SIPARV="YES"
 
 # Now do the actual installation
 echo "Installing setvars EFI utility."
@@ -292,17 +255,17 @@ then
     if [ "x$SIPARV" = "xYES" ]
     then
         echo 'Verbose boot enabled, SIP/ARV enabled'
-        cp -r EFISetvars/EFI-enablesiparv-vb /Volumes/EFI/EFI
+#         cp -r EFISetvars/EFI-enablesiparv-vb /Volumes/EFI/EFI
     else
-        echo 'Verbose boot enabled, SIP/ARV disabled'
+#         echo 'Verbose boot enabled, SIP/ARV disabled'
         cp -r EFISetvars/EFI-verboseboot /Volumes/EFI/EFI
     fi
 elif [ "x$SIPARV" = "xYES" ]
 then
-    echo 'Verbose boot disabled, SIP/ARV enabled'
+#     echo 'Verbose boot disabled, SIP/ARV enabled'
     cp -r EFISetvars/EFI-enablesiparv /Volumes/EFI/EFI
 else
-    echo 'Verbose boot disabled, SIP/ARV disabled'
+#     echo 'Verbose boot disabled, SIP/ARV disabled'
     cp -r EFISetvars/EFI /Volumes/EFI/EFI
 fi
 
