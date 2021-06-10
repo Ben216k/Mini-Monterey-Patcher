@@ -62,7 +62,7 @@ if [[ ! "$1" == "--no-setvars" ]]; then
     if [[ -z "$MOUNTEDPARTITION" ]]; then
         echo Failed to find the partition that
         echo "$INSTALLER"
-s        echo is mounted from.
+        echo is mounted from.
         exit 1
     fi
 
