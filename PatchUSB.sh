@@ -95,13 +95,13 @@ echo
 
 # MARK: Adding Kexts to Installer USB
 
-echo 'No kexts will be added to the installer since none are ready yet.'
+echo 'Add Patches."
 
-# cp -rf "$PATCHES/KextPatches" "$INSTALLER" || error 'Error 2x2 Unable to add patched kexts to installer.'
-# cp -rf "$PATCHES/SystemPatches" "$INSTALLER" || error 'Error 2x2 Unable to add system patches to installer.'
+cp -rf "$PATCHES/KextPatches" "$INSTALLER" || error 'Error 2x2 Unable to add patched kexts to installer.'
+cp -rf "$PATCHES/SystemPatches" "$INSTALLER" || error 'Error 2x2 Unable to add system patches to installer.'
 
-# echo 'Added Backup Kexts Successfully.'
-# echo
+echo 'Added Patches.'
+echo
 
 # MARK: Add BarryKN Hax Tool
 
@@ -120,13 +120,13 @@ echo
 
 #echo "PatchKexts.sh cannot be added yet."
 # echo 'Adding Backup Scripts...'
-# echo 'Adding patch-kexts.sh...'
-# cp -f "$PATCHES/Scripts/PatchKexts.sh" "$INSTALLER" || error 'Error 2x2 Unable to add patch-kexts.sh'
+echo 'Adding PatchSystem.sh...'
+cp -f "$PATCHES/Scripts/PatchKexts.sh" "$INSTALLER" || error 'Error 2x2 Unable to add PatchSystem.sh'
 # echo 'Adding extra commands...'
 # cp -a $PATCHES/ArchiveBin "$INSTALLER/ArchiveBin" || error 'Error 2x2 Unable to add extra commands.'
 #echo 'Added extra commands...'
 # echo 'Added Backup Scripts'
-#echo
+echo
 
 # MARK: Setup Trampoline App
 
