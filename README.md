@@ -10,4 +10,4 @@ A mini patcher for macOS Monterey by Ben Sova.
 
 So yeah... that's what this will be. Monterey, here we come!
 
-# DO NOT use this patcher yet.
+# DO NOT use this yet (soon you may)
