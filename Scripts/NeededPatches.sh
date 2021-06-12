@@ -27,7 +27,6 @@ then
         echo "(2013+):BOOTPLIST"
         BOOTPLIST="--bootPlist" NOREBUILD="--noRebuild"
         ;;
-    # Everything else
     *)
         echo "UNKNOWN"
         exitIfUnknown
