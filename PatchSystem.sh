@@ -286,8 +286,6 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
             error "Failed to backup kernel collection. Check the logs for more info."
         fi
     fi
-
-    echo "[INFO] Saved Backup! PatchKexts.sh can restore backups until PatchSystem.sh adds support."
     
     popd > /dev/null
 
@@ -307,11 +305,15 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         errorCheck "Failed to fix permissions for IO80211Family.kext"
     fi
     
-    backupAndPatch AppleIntelFramebufferCapri.kext.zip AppleIntelFramebufferCapri.kext $HD4000
-    backupAndPatch AppleIntelHD4000Graphics.kext.zip AppleIntelHD4000Graphics.kext $HD4000
-    backupAndPatch AppleIntelHD4000GraphicsGLDriver.bundle.zip AppleIntelHD4000GraphicsGLDriver.bundle $HD4000
-    backupAndPatch AppleIntelHD4000GraphicsMTLDriver.bundle.zip AppleIntelHD4000GraphicsMTLDriver.bundle $HD4000
-    backupAndPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle $HD4000
+    if [[ "$HD4000" == "YES" ]]; then
+        backupAndPatch AppleIntelFramebufferCapri.kext.zip AppleIntelFramebufferCapri.kext YES
+        backupAndPatch AppleIntelHD4000Graphics.kext.zip AppleIntelHD4000Graphics.kext YES
+        backupAndPatch AppleIntelHD4000GraphicsGLDriver.bundle.zip AppleIntelHD4000GraphicsGLDriver.bundle YES
+        backupAndPatch AppleIntelHD4000GraphicsMTLDriver.bundle.zip AppleIntelHD4000GraphicsMTLDriver.bundle YES
+        backupAndPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
+        backupAndPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
+        backupAndPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
+    fi
     
     popd > /dev/null
 
