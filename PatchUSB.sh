@@ -95,7 +95,7 @@ echo
 
 # MARK: Adding Kexts to Installer USB
 
-echo 'Add Patches."
+echo 'Add Patches.'
 
 cp -rf "$PATCHES/KextPatches" "$INSTALLER" || error 'Error 2x2 Unable to add patched kexts to installer.'
 cp -rf "$PATCHES/SystemPatches" "$INSTALLER" || error 'Error 2x2 Unable to add system patches to installer.'
@@ -108,10 +108,10 @@ echo
 echo 'Adding Installer Override...'
 
 mkdir "$INSTALLER/InstallerHax" || error 'Error 2x2 Somehow unable to make BarryKN Hax folder.'
-cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSeal.dylib" "$INSTALLER/InstallerHax/NoSeal.dylib" || error 'Error 2x2(1) Unable to add BarryKN Hax to the USB.'
-cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSeal.dylib" "$INSTALLER/InstallerHax/YesSeal.dylib" || error 'Error 2x2(2) Unable to add BarryKN Hax to the USB.'
-cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/YesSealNoAPFS.dylib" || error 'Error 2x2(3) Unable to add BarryKN Hax to the USB.'
-cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/NoSealNoAPFS.dylib" || error 'Error 2x2(4) Unable to add BarryKN Hax to the USB.'
+cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSeal.dylib" "$INSTALLER/InstallerHax/NoSeal.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
+cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSeal.dylib" "$INSTALLER/InstallerHax/YesSeal.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
+cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/YesSealNoAPFS.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
+cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/NoSealNoAPFS.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
 
 echo 'Added BarryKN Hax.'
 echo
