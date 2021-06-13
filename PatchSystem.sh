@@ -106,7 +106,7 @@ justPatch() {
 # Rootify script
 [ $UID = 0 ] || exec sudo "$0" "$@"
 
-echo 'Welcome to PatchSystem.sh (for Patched Sur)!'
+echo "Welcome to Mini Monterey's PatchSystem.sh!"
 echo 'Note: This script is still in alpha stages.'
 echo
 

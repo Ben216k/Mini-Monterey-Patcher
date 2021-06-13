@@ -107,8 +107,9 @@ echo
 
 echo 'Adding Installer Override...'
 
-mkdir "$INSTALLER/InstallerHax" || error 'Error 2x2 Somehow unable to make BarryKN Hax folder.'
-cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSeal.dylib" "$INSTALLER/InstallerHax/NoSeal.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
+rm -rf "$INSTALLER/InstallerHax" > /dev/null
+mkdir "$INSTALLER/InstallerHax" || error 'Error 2x2 Somehow unable to make Installer Override folder.'
+cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSeal.dylib" "$INSTALLER/InstallerHax/NoSeal.dylib" || error 'Error 2x2 Unable to add Installer Override to the USB.'
 cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSeal.dylib" "$INSTALLER/InstallerHax/YesSeal.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
 cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/YesSealNoAPFS.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
 cp -rf "$PATCHES/InstallerHax/Hax3-BarryKN/HaxDoNotSealNoAPFSROMCheck.dylib" "$INSTALLER/InstallerHax/NoSealNoAPFS.dylib" || error 'Error 2x2 Unable to add BarryKN Hax to the USB.'
@@ -121,9 +122,8 @@ echo
 #echo "PatchKexts.sh cannot be added yet."
 # echo 'Adding Backup Scripts...'
 echo 'Adding PatchSystem.sh...'
-cp -f "$PATCHES/Scripts/PatchKexts.sh" "$INSTALLER" || error 'Error 2x2 Unable to add PatchSystem.sh'
-# echo 'Adding extra commands...'
-# cp -a $PATCHES/ArchiveBin "$INSTALLER/ArchiveBin" || error 'Error 2x2 Unable to add extra commands.'
+cp -f "$PATCHES/PatchSystem.sh" "$INSTALLER" || error 'Error 2x2 Unable to add PatchSystem.sh'
+cp -a $PATCHES/Scripts "$INSTALLER/ArchiveBin" || error 'Error 2x2 Unable to add extra commands.'
 #echo 'Added extra commands...'
 # echo 'Added Backup Scripts'
 echo
