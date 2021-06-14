@@ -222,21 +222,25 @@ if [[ ! -d "$VOLUME/System/Library/Extensions" ]]; then
     error "This volume is not the macOS system volume, but it could be a data volume or a different OS."
 fi
 
-SVPL="$VOLUME"/System/Library/CoreServices/SystemVersion.plist
-SVPL_VER=`fgrep '<string>10' "$SVPL" | sed -e 's@^.*<string>10@10@' -e 's@</string>@@' | uniq -d`
-SVPL_BUILD=`grep '<string>[0-9][0-9][A-Z]' "$SVPL" | sed -e 's@^.*<string>@@' -e 's@</string>@@'`
+if [[ "$1" = "PROTONS" ]]; then
+    
+    SVPL="$VOLUME"/System/Library/CoreServices/SystemVersion.plist
+    SVPL_VER=`fgrep '<string>10' "$SVPL" | sed -e 's@^.*<string>10@10@' -e 's@</string>@@' | uniq -d`
+    SVPL_BUILD=`grep '<string>[0-9][0-9][A-Z]' "$SVPL" | sed -e 's@^.*<string>@@' -e 's@</string>@@'`
 
-if echo $SVPL_BUILD | grep -q '^20'
-then
-    echo -n "[INFO] Volume has Big Sur build" $SVPL_BUILD
-else
-    if [ -z "$SVPL_VER" ]
+    if echo $SVPL_BUILD | grep -q '^20'
     then
-        error "Unknown macOS version on volume."
+        echo -n "[INFO] Volume has Big Sur build" $SVPL_BUILD
     else
-        error "macOS" "$SVPL_VER" "build" "$SVPL_BUILD" "detected. This patcher only works on Big Sur."
+        if [ -z "$SVPL_VER" ]
+        then
+            error "Unknown macOS version on volume."
+        else
+            error "macOS $SVPL_VER build $SVPL_BUILD detected. This patcher only works on Big Sur."
+        fi
+        exit 1
     fi
-    exit 1
+
 fi
 
 # MARK: Preparing for Patching
