@@ -197,7 +197,7 @@ done
 echo
 echo 'Checking patch to volume...'
 
-if [[ $RECOVERY == "YES" ]] && [[ ! -d "/Volumes/$1" ]]; then
+if [[ $RECOVERY == "YES" ]] && [[ ! -d "$1" ]]; then
     echo "[CONFIG] Looking for /Volumes/$1"
     echo 'Make sure to run the script with path/to/PatchSystem.sh "NAME-OF-BIG-SUR-VOLUME"'
     error "No volume was specificed on the command line or the volume selected is invalid."
@@ -205,12 +205,13 @@ elif [[ $RECOVERY == "NO" ]]; then
     echo "[CONFIG] Patching to /System/Volumes/Update/mnt1 (booted system snapshot)"
     VOLUME="/"
 else
-    echo "[CONFIG] Patching to /Volumes/$1"
+    echo "[CONFIG] Patching to $1"
+    VOLUME="$1"
 fi
 
 if [[ ! -d "$VOLUME" ]]
 then
-    echo 'Make sure to run the script with path/to/PatchSystem.sh "NAME-OF-BIG-SUR-VOLUME"'
+    echo 'Make sure to run the script with path/to/PatchSystem.sh /Volumes/"NAME-OF-BIG-SUR-VOLUME" (keep the quotes)'
     error "No volume was specificed on the command line or the volume selected is invalid."
 fi
 
@@ -218,7 +219,7 @@ echo
 echo "Verifying volume..."
 
 if [[ ! -d "$VOLUME/System/Library/Extensions" ]]; then
-    error "The selected volume is not a macOS system volume. This volume might be a data volume or maybe another OS."
+    error "This volume is not the macOS system volume, but it could be a data volume or a different OS."
 fi
 
 SVPL="$VOLUME"/System/Library/CoreServices/SystemVersion.plist
