@@ -228,7 +228,7 @@ if [[ ! "$1" == "PROTONS" ]]; then
     SVPL_VER=`fgrep '<string>10' "$SVPL" | sed -e 's@^.*<string>10@10@' -e 's@</string>@@' | uniq -d`
     SVPL_BUILD=`grep '<string>[0-9][0-9][A-Z]' "$SVPL" | sed -e 's@^.*<string>@@' -e 's@</string>@@'`
 
-    if echo $SVPL_BUILD | grep -q '^20'
+    if echo $SVPL_BUILD | grep -q '^21'
     then
         echo -n "[INFO] Volume has Big Sur build" $SVPL_BUILD
     else
