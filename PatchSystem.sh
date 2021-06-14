@@ -222,7 +222,7 @@ if [[ ! -d "$VOLUME/System/Library/Extensions" ]]; then
     error "This volume is not the macOS system volume, but it could be a data volume or a different OS."
 fi
 
-if [[ "$1" = "PROTONS" ]]; then
+if [[ ! "$1" == "PROTONS" ]]; then
     
     SVPL="$VOLUME"/System/Library/CoreServices/SystemVersion.plist
     SVPL_VER=`fgrep '<string>10' "$SVPL" | sed -e 's@^.*<string>10@10@' -e 's@</string>@@' | uniq -d`
