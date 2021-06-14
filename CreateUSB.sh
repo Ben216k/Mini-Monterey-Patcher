@@ -19,6 +19,7 @@ echo 'Checking Arguments...'
 
 if [[ ! -d "$1" ]]; then
     echo 'No USB provided.'
+    exit 1
 fi
 
 echo 'Checking where to download...'
@@ -36,6 +37,7 @@ read -p "(Y/N): " WOULDLIKE
 
 if ! (echo $WOULDLIKE | grep -q Y || echo $WOULDLIKE | grep -q y); then
     echo "Canceling script."
+    exit 1
 fi
 
 echo "Starting download..."
