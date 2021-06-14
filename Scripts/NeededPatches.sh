@@ -18,7 +18,6 @@ if [ -z "$PATCHMODE" ]
 then
     MODEL=`sysctl -n hw.model`
     case $MODEL in
-        ;;
     Macmini6,?|MacBookAir5,?|MacBookPro9,?|MacBookPro10,?|iMac13,?|MacPro[45],1)
         echo "(2012):BOOTPLIST:HD4000"
         BOOTPLIST="--bootPlist" HD4000="--hd4000"
