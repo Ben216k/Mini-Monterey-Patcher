@@ -86,7 +86,6 @@ backupAndPatch() {
         echo "Correcting permissions for $2..."
         fixPerms "$2"
         errorCheck "Failed to correct permissioms for $2."
-        popd > /dev/null
     fi
 }
 
