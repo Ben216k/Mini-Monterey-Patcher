@@ -124,7 +124,7 @@ echo
 # echo 'Adding Backup Scripts...'
 echo 'Adding PatchSystem.sh...'
 cp -f "$PATCHES/PatchSystem.sh" "$INSTALLER" || error 'Error 2x2 Unable to add PatchSystem.sh'
-cp -a $PATCHES/Scripts "$INSTALLER/ArchiveBin" || error 'Error 2x2 Unable to add extra commands.'
+cp -a $PATCHES/Scripts "$INSTALLER/Scripts" || error 'Error 2x2 Unable to add extra commands.'
 #echo 'Added extra commands...'
 # echo 'Added Backup Scripts'
 echo
@@ -239,9 +239,19 @@ if [[ ! "$1" == "--no-setvars" ]]; then
         echo "mounting of the partition somehow failed."
         error 'Error 2x2 Could not find (or mount?) the EFI partition of this device.'
     fi
-
-    echo 'The patcher is unfinished, so just leaving SIP on'
-    SIPARV="YES"
+    
+    MACMODEL=`sysctl -n hw.model`
+    echo "Detected Mac model is:" $MACMODEL
+    case $MACMODEL in
+    iMac1[45],?|MacBookPro11,?|MacBookAir6,?|MacBook8,?)
+        echo "Mid 2013 or Later Mac detected, so enabling SIP/ARV."
+        SIPARV="YES"
+        ;;
+    *)
+        echo "Early 2013 or Earily Mac detected, so disabling SIP/ARV."
+        SIPARV="NO"
+        ;;
+    esac
 
     # Now do the actual installation
     echo "Installing setvars EFI utility."
@@ -275,3 +285,5 @@ fi
 
 echo
 echo 'Mini Monterey PatchUSB.sh has finished. Refer to the README for instruction on how to continue.'
+
+[[ ! "$SIPARV" == "YES" ]] || echo "Note: This USB should only be used on Mid 2013 and later Macs."

@@ -22,7 +22,7 @@ then
         echo "(2012):BOOTPLIST:HD4000"
         BOOTPLIST="--bootPlist" HD4000="--hd4000"
         ;;
-    iMac14,[123])
+    iMac1[45],?|MacBookPro11,?|MacBookAir6,?|MacBook8,?)
         echo "(2013+):BOOTPLIST"
         BOOTPLIST="--bootPlist" NOREBUILD="--noRebuild"
         ;;
