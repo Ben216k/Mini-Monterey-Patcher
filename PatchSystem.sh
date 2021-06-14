@@ -170,7 +170,7 @@ while [[ $1 == -* ]]; do
             echo '[CONFIG] Unpatching system.'
             echo 'Note: This may not fully (or correctly) remove all patches.'
             ;;
-        --wifi=mojaveHybrid)
+        --wifi)
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
             WIFIPATCH="YES"
             ;;
