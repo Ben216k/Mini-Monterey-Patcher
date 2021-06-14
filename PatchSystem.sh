@@ -178,6 +178,7 @@ while [[ $1 == -* ]]; do
         --hd4000)
             echo '[CONFIG] Will patch AppleIntelHD4000.kext for Graphics Acceleration'
             HD4000="YES"
+            ;;
         --bootPlist)
             echo "[CONFIG] Will patch com.apple.Boot.plist for NVRAM Resets"
             BOOTPLIST="YES"
