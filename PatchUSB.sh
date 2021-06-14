@@ -167,12 +167,6 @@ cp -rf $PATCHES/Images/InstallIcon.icns "$INSTALLER"/.VolumeIcon.icns
 
 echo 'Themed (or at least tried to) the installer icon'
 
-echo 'Replacing Boot.efi'
-
-cp -rf "$PATCHES/InstallerPatches/boot.efi" "$INSTALLER/System/Library/CoreServices/boot.efi"
-
-echo 'Replaced Boot.efi'
-
 echo
 
 # MARK: Sync and Finish
