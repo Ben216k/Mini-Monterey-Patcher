@@ -170,9 +170,13 @@ while [[ $1 == -* ]]; do
             echo '[CONFIG] Unpatching system.'
             echo 'Note: This may not fully (or correctly) remove all patches.'
             ;;
+        --wifi+backport)
+            echo '[CONFIG] Will patch IO80211Family.kext and backport AppleBCMWLANCoreMac.kext for WiFi.'
+            WIFIPATCH="MOJAVE-BACKPORT"
+            ;;
         --wifi)
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
-            WIFIPATCH="YES"
+            WIFIPATCH="MOJAVE-HYBRID"
             ;;
         --hd4000)
             echo '[CONFIG] Will patch AppleIntelHD4000.kext for Graphics Acceleration'
@@ -300,7 +304,7 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
 
     echo "Beginning Kext Patching..."
 
-    if [[ "$WIFIPATCH" == "YES" ]]; then
+    if [[ ! -z "$WIFIPATCH" ]]; then
         backupAndPatch IO80211Family.kext.zip IO80211Family.kext YES
         pushd IO80211Family.kext/Contents/Plugins > /dev/null
         unzip -q "$LPATCHES/KextPatches/AirPortAtheros40-17G14033+pciid.kext.zip"
@@ -308,6 +312,10 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         popd > /dev/null
         fixPerms "IO80211Family.kext"
         errorCheck "Failed to fix permissions for IO80211Family.kext"
+    fi
+    
+    if [[ "$WIFIPATCH" == "MOJAVE-BACKPORT" ]]; then
+        backupAndPatch AppleBCMWLANCoreMac.kext.zip AppleBCMWLANCoreMac.kext YES
     fi
     
     if [[ "$HD4000" == "YES" ]]; then
