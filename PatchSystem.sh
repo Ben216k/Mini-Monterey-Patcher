@@ -302,6 +302,7 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
 
     if [[ ! -z "$WIFIPATCH" ]]; then
         backupAndPatch IO80211FamilyLegacy.kext.zip IO80211FamilyLegacy.kext YES
+        backupAndPatch IOUserEthernet.kext.zip IOUserEthernet.kext YES
     fi
     
     if [[ "$HD4000" == "YES" ]]; then
