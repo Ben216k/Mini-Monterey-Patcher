@@ -92,7 +92,7 @@ backupAndPatch() {
 justPatch() {
     if [[ "$3" == "YES" ]]; then
         echo "Patching from $2..."
-        rm -rf "$2"
+        deleteIfNeeded "$2"
         unzip -q "$LPATCHES/KextPatches/$1"
         errorCheck "Failed to patch $2."
         echo "Correcting permissions for $2..."
@@ -305,13 +305,13 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
     fi
     
     if [[ "$HD4000" == "YES" ]]; then
-        backupAndPatch AppleIntelFramebufferCapri.kext.zip AppleIntelFramebufferCapri.kext YES
-        backupAndPatch AppleIntelHD4000Graphics.kext.zip AppleIntelHD4000Graphics.kext YES
-        backupAndPatch AppleIntelHD4000GraphicsGLDriver.bundle.zip AppleIntelHD4000GraphicsGLDriver.bundle YES
-        backupAndPatch AppleIntelHD4000GraphicsMTLDriver.bundle.zip AppleIntelHD4000GraphicsMTLDriver.bundle YES
-        backupAndPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
-        backupAndPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
-        backupAndPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
+        justPatch AppleIntelFramebufferCapri.kext.zip AppleIntelFramebufferCapri.kext YES
+        justPatch AppleIntelHD4000Graphics.kext.zip AppleIntelHD4000Graphics.kext YES
+        justPatch AppleIntelHD4000GraphicsGLDriver.bundle.zip AppleIntelHD4000GraphicsGLDriver.bundle YES
+        justPatch AppleIntelHD4000GraphicsMTLDriver.bundle.zip AppleIntelHD4000GraphicsMTLDriver.bundle YES
+        justPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
+        justPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
+        justPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
     fi
     
     popd > /dev/null
