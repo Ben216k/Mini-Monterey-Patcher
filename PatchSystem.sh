@@ -33,8 +33,7 @@ error() {
 # Check for errors with the previous command. 
 # Cleaner for non-inline uses.
 errorCheck() {
-    if [ $? -ne 0 ]
-    then
+    if [[ $? -ne 0 ]]; then
         error "$1"
     fi
 }
@@ -98,7 +97,6 @@ justPatch() {
         echo "Correcting permissions for $2..."
         fixPerms "$2"
         errorCheck "Failed to correct permissioms for $2."
-        popd > /dev/null
     fi
 }
 
