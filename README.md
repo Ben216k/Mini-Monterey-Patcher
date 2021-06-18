@@ -14,7 +14,7 @@ So yeah... that's what this will be. Monterey, here we come!
 
 # Credits
 - [BarryKN](https://github.com/barrykn) for the patching method and the micropatcher.
-- [OCLP Team](https://github.com/dortania) for HD4000 Acceleration.
+- EduCovas, [Jackluke](https://github.com/jacklukem), [DhinakG](https://github.com/DhinakG) and [MykolaG](https://github.com/khronokernel) from [Dortania](https://github.com/dortania) for HD4000 Acceleration.
 - [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis) and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
 
 ## Supported Unsupported Macs
