@@ -34,12 +34,12 @@ then
 fi
 
 if [ -z "`ioreg -l | fgrep 802.11 | fgrep ac`" ]; then
-    echo "(MORE):WIFI"
-    WIFI="--wifi"
+    echo "Just a note: You won't have WiFi. You should know that if you read the README.md"
+    sleep 5
 fi
 
 if [[ "$1" == "--rerun" ]]; then
     echo "Running PatchSystem.sh..."
-    "$(dirname "$0")/../PatchSystem.sh" $WIFI  $HD4000 $BOOTPLIST $NOREBUILD $2
+    "$(dirname "$0")/../PatchSystem.sh" $HD4000 $BOOTPLIST $NOREBUILD $2
     exit $?
 fi

@@ -168,7 +168,7 @@ while [[ $1 == -* ]]; do
             echo '[CONFIG] Unpatching system.'
             echo 'Note: This may not fully (or correctly) remove all patches.'
             ;;
-        --wifi)
+        --wifi(borked))
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
             WIFIPATCH="MOJAVE-PLUS"
             ;;
@@ -300,7 +300,6 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
 
     if [[ ! -z "$WIFIPATCH" ]]; then
         backupAndPatch IO80211FamilyLegacy.kext.zip IO80211FamilyLegacy.kext YES
-        backupAndPatch IOUserEthernet.kext.zip IOUserEthernet.kext YES
     fi
     
     if [[ "$HD4000" == "YES" ]]; then
