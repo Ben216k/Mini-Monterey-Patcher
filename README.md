@@ -13,9 +13,9 @@ Also, no Patched Monterey will not be exclusive to Mid-2013 and later Macs, I've
 So yeah... that's what this will be. Monterey, here we come!
 
 # Credits
-• [BarryKN](https://github.com/barrykn) for the patching method and the micropatcher.
-• [OCLP Team](https://github.com/dortania) for HD4000 Acceleration.
-• [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis)and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
+- [BarryKN](https://github.com/barrykn) for the patching method and the micropatcher.
+- [OCLP Team](https://github.com/dortania) for HD4000 Acceleration.
+- [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis)and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
 
 ## Supported Unsupported Macs
 ### Mid 2013 to 2015:
