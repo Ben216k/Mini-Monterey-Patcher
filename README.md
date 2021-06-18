@@ -15,7 +15,7 @@ So yeah... that's what this will be. Monterey, here we come!
 # Credits
 - [BarryKN](https://github.com/barrykn) for the patching method and the micropatcher.
 - [OCLP Team](https://github.com/dortania) for HD4000 Acceleration.
-- [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis)and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
+- [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis) and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
 
 ## Supported Unsupported Macs
 ### Mid 2013 to 2015:
@@ -26,7 +26,7 @@ If you have one of these Macs, you must have a 80211ac WiFi card (or if you have
 
 Unlike the Mid-2013 and later Macs, you do have to do all the steps, otherwise you would suffer the lack of graphics acceleration and sleep/wake.
 
-#### Late 2011 and Below:
+### Late 2011 and Below:
 These Macs are currently unsupported because they need Legacy Graphics Acceleration with OpenGL and not Metal which will be a some time from now. Without it they would run like literal snails (imagine waiting for 14 seconds just for Safari to close).
 
 ## Instructions
@@ -63,7 +63,7 @@ There's not much I can say here other than "Yeah, that's normal". You can use th
 #### Can I do an NVRAM/PRAM reset?
 Yes, but only if you ran `PatchSystem.sh`. Afterwards you should boot into the EFI Boot on the installer USB that you held on to because you read a different question in the FAQ. If you didn't run `PatchSystem.sh` then your Mac won't boot at all without using the EFI Boot.
 
-#### WiFi doesnt' work.
+#### WiFi doesn't work.
 
 Did you read the second sentence? No? Okay.
 
