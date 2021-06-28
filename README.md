@@ -32,19 +32,19 @@ These Macs are currently unsupported because they need Legacy Graphics Accelerat
 ## Instructions
 1. Download and extract "Source Code (zip)" from the latest release.
 2. Open Disk Utility and format your drive as MacOS Extended (Journaled) with a GUID Partition Map.
-2. Get the latest copy of the macOS Monterey InstallAssistant which you can find on [this page](https://mrmacintosh.com/macos-12-monterey-full-installer-database-download-directly-from-apple/) (or use this [Beta 1 link](http://swcdn.apple.com/content/downloads/38/12/071-51840-A_R2JDKNM0LX/wqollynqs6j5006166tvw4rliu9htf7swu/InstallAssistant.pkg)).
-3. Install the package, then open Terminal and type in `sudo /Applications/"Install macOS 12 Beta"/Contents/Resources/createinstallmedia --volume ` (make sure there's a space after `--volume`) then drag in your USB from your Desktop. Press enter and wait for it to finish.
-3. Drag in PatchUSB.sh then press enter and wait for it to finish.
-4. Reboot your Mac and hold option until you see the boot screen. There, select EFI Boot (your Mac will immediately turn off afterwards, that is normal)
-5. Turn on your Mac holding option like before, then select Install macOS 12 Beta.
-6. After it boots, open Install macOS 12 Beta and follow through the prompts.
-7. Once the install finishes, you'll have to do one of two things:
+3. Get the latest copy of the macOS Monterey InstallAssistant which you can find on [this page](https://mrmacintosh.com/macos-12-monterey-full-installer-database-download-directly-from-apple/) (or use this [Beta 1 link](http://swcdn.apple.com/content/downloads/38/12/071-51840-A_R2JDKNM0LX/wqollynqs6j5006166tvw4rliu9htf7swu/InstallAssistant.pkg)).
+4. Install the package, then open Terminal and type in `/Applications/"Install macOS 12 Beta"/Contents/Resources/createinstallmedia --volume ` (make sure there's a space after `--volume`) then drag in your USB from your Desktop. Press enter and wait for it to finish.
+5. Drag in PatchUSB.sh then press enter and wait for it to finish.
+6. Reboot your Mac and hold option until you see the boot screen. There, select EFI Boot (your Mac will immediately turn off afterwards, that is normal)
+7. Turn on your Mac holding option like before, then select Install macOS 12 Beta.
+8. After it boots, open Install macOS 12 Beta and follow through the prompts.
+9. Once the install finishes, you'll have to do one of two things:
     • If you have a Mid 2013 or Later Mac, you're pretty much done.
     • If you have an Early 2013 or Older Mac, you have to continue through to get WiFi and Acceleration.
-8. Turn your Mac off, then boot into Install macOS 12 Beta again.
-9. Click Utilities in the menu bar then click Terminal.
-10. Type in `/Volumes/Image\ Volume/PatchSystem.sh /Volumes/"Your Drive"` replacing Your Drive with the name of the drive you selected to install Monterey on (Keep the quotes), then press enter.
-11. After that finishes, reboot, read the FAQ then enjoy Monterey!
+10. Turn your Mac off, then boot into Install macOS 12 Beta again.
+11. Click Utilities in the menu bar then click Terminal.
+12. Type in `/Volumes/Image\ Volume/PatchSystem.sh /Volumes/"Your Drive"` replacing Your Drive with the name of the drive you selected to install Monterey on (Keep the quotes), then press enter.
+13. After that finishes, reboot, read the FAQ then enjoy Monterey!
 
 ## FAQ
 #### Can I erase the Installer USB after I'm done?

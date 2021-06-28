@@ -165,8 +165,7 @@ echo "Checking Arguments..."
 while [[ $1 == -* ]]; do
     case $1 in
         -u)
-            echo '[CONFIG] Unpatching system.'
-            echo 'Note: This may not fully (or correctly) remove all patches.'
+            error 'Unpatching the system is temporarily disabled.'
             ;;
         --wifi-that-will-fail-and-i-have-no-idea-why-you-are-trying-to-use-this)
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
@@ -310,6 +309,11 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         justPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
         justPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
         justPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
+        pushd "$VOLUMES/System/Library/Frameworks/WebKit.framework/Resources" > /dev/null
+        echo 'Patching com.apple.WebProcess.sb...'
+        rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb" || error 'Failed to patch com.apple.WebProcess'
+        fixPerms "com.apple.WebProcess.sb" || error 'Failed to fix permissions for com.apple.WebProcess.sb'
+        popd > /dev/null
     fi
     
     popd > /dev/null
