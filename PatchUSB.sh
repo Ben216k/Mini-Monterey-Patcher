@@ -41,7 +41,15 @@ fi
 echo 'Installer USB Detected!'
 
 echo
+echo 'Mostly unpatching if needed...'
 
+[[ ! -d "$INSTALLER/InstallerHax" ]] || rm -rf "$INSTALLER/InstallerHax"
+[[ ! -d "$INSTALLER/KextPatches" ]] || rm -rf "$INSTALLER/KextPatches"
+[[ ! -d "$INSTALLER/SystemPatches" ]] || rm -rf "$INSTALLER/SystemPatches"
+[[ ! -d "$INSTALLER/Scripts" ]] || rm -rf "$INSTALLER/KextPatches"
+[[ ! -e "$INSTALLER/PatchSystem.sh" ]] || rm -rf "$INSTALLER/PatchSystem.sh"
+
+echo
 echo 'Detecting patches at script directory...'
 
 PATCHES="$(dirname $0)"
