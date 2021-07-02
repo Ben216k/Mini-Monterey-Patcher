@@ -11,6 +11,37 @@
 #  on unsupported Macs
 #
 
+echo "Checking environment..."
+LPATCHES="/Volumes/Image Volume"
+if [[ -d "$LPATCHES" ]]; then
+    echo "[INFO] We're in a recovery environment."
+    RECOVERY="YES"
+else
+    echo "[INFO] We're booted into full macOS."
+    RECOVERY="NO"
+    if [[ -d "$(dirname $0)/KextPatches" ]]; then
+        echo '[INFO] Using dirname source.'
+        LPATCHES="$(dirname $0)"
+    elif [[ -d "/Volumes/Install macOS 12 Beta/KextPatches" ]]; then
+        echo '[INFO] Using Install macOS 12 Beta source.'
+        LPATCHES="/Volumes/Install macOS 12 Beta"
+    elif [[ -d "/Volumes/Install macOS Monterey Beta/KextPatches" ]]; then
+        echo '[INFO] Using Install macOS Monterey Beta source.'
+        LPATCHES="/Volumes/Install macOS Monterey Beta"
+    elif [[ -d "/Volumes/Install macOS Monterey/KextPatches" ]]; then
+        echo '[INFO] Using Install macOS Monterey source.'
+        LPATCHES="/Volumes/Install macOS Monterey"
+    elif [[ -d "/usr/local/lib/Mini-Monterey-Patcher/KextPatches" ]]; then
+        echo '[INFO] Using usr lib source.'
+        LPATCHES="/usr/local/lib/Mini-Monterey-Patcher"
+    fi
+fi
+if [[ ! -d "$LPATCHES" ]]; then
+    echo "After checking every normal place, the patches were not found"
+    echo "Please plug in a patched macOS installer USB, or install the"
+    echo "Patched Sur post-install app to your Mac."
+    error "Error 3x1: The patches for PatchKexts.sh were not detected."
+fi
 if [[ -z "$1" ]] || [[ "$1" == "--detect" ]]; then
     echo "Set to detect patches, restarting PatchSystem with NeededPatches..."
     "$(dirname "$0")/Scripts/NeededPatches.sh" --rerun $2
@@ -106,44 +137,6 @@ justPatch() {
 echo "Welcome to Mini Monterey's PatchSystem.sh!"
 echo 'Note: This script is still in alpha stages.'
 echo
-
-# MARK: Check Environment and Patch Kexts Location
-
-echo "Checking environment..."
-LPATCHES="/Volumes/Image Volume"
-if [[ -d "$LPATCHES" ]]; then
-    echo "[INFO] We're in a recovery environment."
-    RECOVERY="YES"
-else
-    echo "[INFO] We're booted into full macOS."
-    RECOVERY="NO"
-    if [[ -d "$(dirname $0)/KextPatches" ]]; then
-        echo '[INFO] Using dirname source.'
-        LPATCHES="$(dirname $0)"
-    elif [[ -d "/Volumes/Install macOS 12 Beta/KextPatches" ]]; then
-        echo '[INFO] Using Install macOS 12 Beta source.'
-        LPATCHES="/Volumes/Install macOS 12 Beta"
-    elif [[ -d "/Volumes/Install macOS Monterey Beta/KextPatches" ]]; then
-        echo '[INFO] Using Install macOS Monterey Beta source.'
-        LPATCHES="/Volumes/Install macOS Monterey Beta"
-    elif [[ -d "/Volumes/Install macOS Monterey/KextPatches" ]]; then
-        echo '[INFO] Using Install macOS Monterey source.'
-        LPATCHES="/Volumes/Install macOS Monterey"
-    elif [[ -d "/usr/local/lib/Mini-Monterey-Patcher/KextPatches" ]]; then
-        echo '[INFO] Using usr lib source.'
-        LPATCHES="/usr/local/lib/Mini-Monterey-Patcher"
-    fi
-fi
-
-echo
-echo "Confirming patch location..."
-
-if [[ ! -d "$LPATCHES" ]]; then
-    echo "After checking every normal place, the patches were not found"
-    echo "Please plug in a patched macOS installer USB, or install the"
-    echo "Patched Sur post-install app to your Mac."
-    error "Error 3x1: The patches for PatchKexts.sh were not detected."
-fi
 
 echo "[INFO] Patch Location: $LPATCHES"
 
@@ -309,11 +302,13 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         justPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
         justPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
         justPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
-        pushd "$VOLUMES/System/Library/Frameworks/WebKit.framework/Resources" > /dev/null
-        echo 'Patching com.apple.WebProcess.sb...'
-        rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb" || error 'Failed to patch com.apple.WebProcess'
-        fixPerms "com.apple.WebProcess.sb" || error 'Failed to fix permissions for com.apple.WebProcess.sb'
-        popd > /dev/null
+        if [[ "$RECOVERY" == "YES" ]]; then
+            pushd "$VOLUMES/System/Library/Frameworks/WebKit.framework/Resources" > /dev/null
+            echo 'Patching com.apple.WebProcess.sb...'
+            rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb" || error 'Failed to patch com.apple.WebProcess'
+            fixPerms "com.apple.WebProcess.sb" || error 'Failed to fix permissions for com.apple.WebProcess.sb'
+            popd > /dev/null
+        fi
     fi
     
     popd > /dev/null
