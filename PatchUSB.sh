@@ -27,11 +27,29 @@ echo
 
 # MARK: Detect USB and Payloads
 
-echo 'Detecting Installer USB at /Volumes/Install macOS 12 Beta...'
+echo 'Detecting Installer USB at /Volumes/Install macOS [12/Monterey] [Beta]...'
 
 if [[ -d '/Volumes/Install macOS 12 Beta/Install macOS 12 Beta.app' ]]; then
     INSTALLER='/Volumes/Install macOS 12 Beta'
     APPPATH="$INSTALLER/Install macOS 12 Beta.app"
+else
+    echo 'Installer USB was not detected.'
+    echo 'Please be sure to not rename the USB'
+    error 'Error 2x1: Installer Not Found'
+fi
+
+if [[ -d "/Volumes/Install macOS 12 Beta/Install macOS 12 Beta.app" ]]; then
+    echo '[INFO] Using Install macOS 12 Beta source.'
+    INSTALLER='/Volumes/Install macOS 12 Beta'
+    APPPATH="$INSTALLER/Install macOS 12 Beta.app"
+elif [[ -d "/Volumes/Install macOS Monterey Beta/Install macOS Monterey Beta.app" ]]; then
+    echo '[INFO] Using Install macOS Monterey Beta source.'
+    INSTALLER='/Volumes/Install macOS Monterey Beta'
+    APPPATH="$INSTALLER/Install macOS Monterey Beta.app"
+elif [[ -d "/Volumes/Install macOS Monterey/Install macOS Monterey.app" ]]; then
+    echo '[INFO] Using Install macOS Monterey source.'
+    INSTALLER='/Volumes/Install macOS Monterey'
+    APPPATH="$INSTALLER/Install macOS Monterey.app"
 else
     echo 'Installer USB was not detected.'
     echo 'Please be sure to not rename the USB'
