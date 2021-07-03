@@ -28,6 +28,9 @@ else
     elif [[ -d "/Volumes/Install macOS Monterey Beta/KextPatches" ]]; then
         echo '[INFO] Using Install macOS Monterey Beta source.'
         LPATCHES="/Volumes/Install macOS Monterey Beta"
+    elif [[ -d "/Volumes/Install macOS Monterey beta/KextPatches" ]]; then
+        echo '[INFO] Using Install macOS Monterey beta source.'
+        LPATCHES="/Volumes/Install macOS Monterey beta"
     elif [[ -d "/Volumes/Install macOS Monterey/KextPatches" ]]; then
         echo '[INFO] Using Install macOS Monterey source.'
         LPATCHES="/Volumes/Install macOS Monterey"
