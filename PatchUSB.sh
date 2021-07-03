@@ -37,7 +37,7 @@ elif [[ -d "/Volumes/Install macOS Monterey Beta/Install macOS Monterey Beta.app
     echo '[INFO] Using Install macOS Monterey Beta source.'
     INSTALLER='/Volumes/Install macOS Monterey Beta'
     APPPATH="$INSTALLER/Install macOS Monterey Beta.app"
-elif [[ -d "/Volumes/Install macOS Monterey Beta/Install macOS Monterey beta.app" ]]; then
+elif [[ -d "/Volumes/Install macOS Monterey beta/Install macOS Monterey beta.app" ]]; then
     echo '[INFO] Using Install macOS Monterey beta source.'
     INSTALLER='/Volumes/Install macOS Monterey beta'
     APPPATH="$INSTALLER/Install macOS Monterey beta.app"
