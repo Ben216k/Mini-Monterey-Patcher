@@ -79,8 +79,7 @@ echo
 # MARK: Verifying thing
 
 if [[ ! "$1" == "--no-setvars" ]]; then
-
-    MOUNTEDPARTITION=`mount | fgrep "$INSTALLER" | awk '{print $1}'`
+    MOUNTEDPARTITION=`mount | fgrep -i "$INSTALLER" | awk '{print $1}'`
     if [[ -z "$MOUNTEDPARTITION" ]]; then
         echo Failed to find the partition that
         echo "$INSTALLER"
