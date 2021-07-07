@@ -163,7 +163,7 @@ while [[ $1 == -* ]]; do
         -u)
             error 'Unpatching the system is temporarily disabled.'
             ;;
-        --wifi-that-will-fail-and-i-have-no-idea-why-you-are-trying-to-use-this)
+        --wifi-maybe)
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
             WIFIPATCH="MOJAVE-PLUS"
             ;;
