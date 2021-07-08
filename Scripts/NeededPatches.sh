@@ -34,8 +34,8 @@ then
 fi
 
 if [ -z "`ioreg -l | fgrep 802.11 | fgrep ac`" ]; then
-    echo "Just a note: You won't have WiFi. You should know that if you read the README.md"
-    sleep 5
+    echo "(MORE):WIFI"
+    WIFI="--wifi=native-plus"
 fi
 
 if [[ "$1" == "--rerun" ]]; then

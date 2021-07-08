@@ -163,9 +163,9 @@ while [[ $1 == -* ]]; do
         -u)
             error 'Unpatching the system is temporarily disabled.'
             ;;
-        --wifi-maybe)
+        --wifi=native-plus)
             echo '[CONFIG] Will patch IO80211Family.kext for WiFi.'
-            WIFIPATCH="MOJAVE-PLUS"
+            WIFIPATCH="NATIVE-PLUS"
             ;;
         --hd4000)
             echo '[CONFIG] Will patch AppleIntelHD4000.kext for Graphics Acceleration'
