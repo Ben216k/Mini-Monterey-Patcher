@@ -45,13 +45,14 @@ if [[ ! -d "$LPATCHES" ]]; then
     echo "Patched Sur post-install app to your Mac."
     error "Error 3x1: The patches for PatchKexts.sh were not detected."
 fi
+
 if [[ -z "$1" ]] || [[ "$1" == "--detect" ]]; then
     echo "Set to detect patches, restarting PatchSystem with NeededPatches..."
-    "$(dirname "$0")/Scripts/NeededPatches.sh" --rerun $2
+    "$LPATCHES/Scripts/NeededPatches.sh" --rerun $2
     exit $?
 elif echo "$1" | grep '/Volumes/'; then
     echo "Set to detect patches, restarting PatchSystem with NeededPatches..."
-    "$(dirname "$0")/Scripts/NeededPatches.sh" --rerun $1
+    "$LPATCHES/Scripts/NeededPatches.sh" --rerun $1
     exit $?
 fi
 
@@ -153,6 +154,11 @@ if [[ ! "$CSRCONFIG" == "csr-active-config	%7f%08%00%00" ]]; then
     else
         error "[ERROR] SIP is on, which prevents the patcher from patching the kexts. Boot into the purple EFI Boot on the installer USB to fix this."
     fi
+fi
+
+echo "Checking OS Version..."
+if ! sw_vers | grep "ProductVersion: 12"; then
+    error '[ERROR] This script needs to be run from macOS Monterey. (Otherwise kmutil will fail)'
 fi
 
 echo
@@ -305,7 +311,7 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         justPatch AppleIntelHD4000GraphicsVADriver.bundle.zip AppleIntelHD4000GraphicsVADriver.bundle YES
         justPatch AppleIntelGraphicsShared.bundle.zip AppleIntelGraphicsShared.bundle YES
         justPatch AppleIntelIVBVA.bundle.zip AppleIntelIVBVA.bundle YES
-        if [[ "$RECOVERY" == "YES" ]]; then
+        if [[ "$RECOVERY" != "YES" ]]; then
             pushd "$VOLUMES/System/Library/Frameworks/WebKit.framework/Resources" > /dev/null
             echo 'Patching com.apple.WebProcess.sb...'
             rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb" || error 'Failed to patch com.apple.WebProcess'
