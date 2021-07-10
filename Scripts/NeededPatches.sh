@@ -40,6 +40,6 @@ fi
 
 if [[ "$1" == "--rerun" ]]; then
     echo "Running PatchSystem.sh..."
-    "$3" $HD4000 $BOOTPLIST $NOREBUILD $2
+    "$2" $HD4000 $BOOTPLIST $NOREBUILD $WIFI $3
     exit $?
 fi
