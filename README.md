@@ -32,7 +32,7 @@ These Macs are currently unsupported because they need Legacy Graphics Accelerat
 1. Download and extract "Source Code (zip)" from the latest release.
 2. Open Disk Utility and format your drive as MacOS Extended (Journaled) with a GUID Partition Map.
 3. Get the latest copy of the macOS Monterey InstallAssistant which you can find on [this page](https://mrmacintosh.com/macos-12-monterey-full-installer-database-download-directly-from-apple/) (or use this [Beta 2 link](http://swcdn.apple.com/content/downloads/54/23/071-59953-A_U9D4NB05NR/nqzt71pnylsuux326a4vqexb33oz0auhas/InstallAssistant.pkg)).
-4. Install the package, then open Terminal and type in `sudo /Applications/"Install macOS Monterey beta"/Contents/Resources/createinstallmedia --volume ` (make sure there's a space after `--volume`) then drag in your USB from your Desktop. Press enter and wait for it to finish.
+4. Install the package, then open Terminal and type in `sudo /Applications/"Install macOS Monterey beta.app"/Contents/Resources/createinstallmedia --volume ` (make sure there's a space after `--volume`) then drag in your USB from your Desktop. Press enter and wait for it to finish.
 5. Drag in PatchUSB.sh then press enter and wait for it to finish.
 6. Reboot your Mac and hold option until you see the boot screen. There, select EFI Boot (your Mac will immediately turn off afterwards, that is normal)
 7. Turn on your Mac holding option like before, then select Install macOS 12 Beta.
