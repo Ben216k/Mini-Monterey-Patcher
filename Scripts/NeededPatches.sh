@@ -40,6 +40,6 @@ fi
 
 if [[ "$1" == "--rerun" ]]; then
     echo "Running PatchSystem.sh..."
-    "$(dirname "$0")/../PatchSystem.sh" $HD4000 $BOOTPLIST $NOREBUILD $2
+    "$3" $HD4000 $BOOTPLIST $NOREBUILD $2
     exit $?
 fi
