@@ -25,6 +25,8 @@ If you have one of these first make sure you need the patcher, since some of the
 ### Early 2012 to Early 2013:
 These Macs require patching the kexts (it's simple with PatchSystem.sh) to get WiFi, Graphics Acceleration, and Sleep/Wake. However, Bluetooth doesn't work even if you patch the kexts (and therefore continuity features won't work). That's a pretty big trade off so make sure you understand that before upgrading to Monterey. This may change later on, but as of right now, that's how it is.
 
+\*There's a chance the WiFi patch won't work, so run `ioreg -rn ARPT | grep IOName` in Terminal and open an issue with the output of that.
+
 ### Late 2011 and Below:
 These Macs are currently unsupported because they need Legacy Graphics Acceleration with OpenGL and not Metal which will be a some time from now. Without it they would run like literal snails (imagine waiting for 14 seconds just for Safari to close).
 
