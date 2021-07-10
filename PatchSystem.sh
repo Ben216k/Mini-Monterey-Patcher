@@ -157,7 +157,7 @@ if [[ ! "$CSRCONFIG" == "csr-active-config	%7f%08%00%00" ]]; then
 fi
 
 echo "Checking OS Version..."
-if ! sw_vers | grep "ProductVersion: 12"; then
+if ! sw_vers -buildVersion | grep "21"; then
     error '[ERROR] This script needs to be run from macOS Monterey. (Otherwise kmutil will fail)'
 fi
 
