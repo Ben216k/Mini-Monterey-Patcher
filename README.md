@@ -1,7 +1,7 @@
 # Mini Monterey Patcher
 A mini patcher for macOS Monterey by Ben Sova.
 
-**Only supports Mid-2013 and later Macs (with exceptions) for now.**
+Full support for **Mid 2013 and later**. Some support for **Early 2012 and later**.
 
 ## Wait, where's the UI?!
 **This in no way is the sequel to Patched Sur.** This will only be a terminal-based patcher.
@@ -15,7 +15,7 @@ So yeah... that's what this will be. Monterey, here we come!
 # Credits
 - [BarryKN](https://github.com/barrykn) for the patching method and the micropatcher.
 - EduCovas, [Jackluke](https://github.com/jacklukem), [DhinakG](https://github.com/DhinakG) and [MykolaG](https://github.com/khronokernel) from [Dortania](https://github.com/dortania) for HD4000 Acceleration.
-- [ASentientBot](https://github.com/ASentientBot) and [MykolaG](https://github.com/khronokernel) for pre-802.11ac WiFi patches.
+- [ASentientBot](https://github.com/ASentientBot) and [MykolaG](https://github.com/khronokernel) for pre-802.11ac WiFi patches (and EduCovas for alerting me of them).
 - [Monkiey](https://github.com/Monkiey), [riiveraluis](https://github.com/riiveraluis) and [Finder352](https://www.youtube.com/channel/UC1ANuAzvOToCVizzck3JjPg) for testing out the patcher. 
 
 ## Supported Unsupported Macs
@@ -23,9 +23,7 @@ So yeah... that's what this will be. Monterey, here we come!
 If you have one of these first make sure you need the patcher, since some of these Macs don't need it. If you do proceed, then you'll be technically done at Step 7, but the rest will help to allow NVRAM Resets
 
 ### Early 2012 to Early 2013:
-If you have one of these Macs, you must have a 80211ac WiFi card (or if you have a constant and forever Ethernet connection, that works too) because the WiFi patch is borked. I may or may not be able to fix this in the future, but for now it's going to be that way. 
-
-Unlike the Mid-2013 and later Macs, you do have to do all the steps, otherwise you would suffer the lack of graphics acceleration and sleep/wake.
+These Macs require patching the kexts (it's simple with PatchSystem.sh) to get WiFi, Graphics Acceleration, and Sleep/Wake. However, Bluetooth doesn't work even if you patch the kexts (and therefore continuity features won't work). That's a pretty big trade off so make sure you understand that before upgrading to Monterey. This may change later on, but as of right now, that's how it is.
 
 ### Late 2011 and Below:
 These Macs are currently unsupported because they need Legacy Graphics Acceleration with OpenGL and not Metal which will be a some time from now. Without it they would run like literal snails (imagine waiting for 14 seconds just for Safari to close).
@@ -65,9 +63,9 @@ There's not much I can say here other than "Yeah, that's normal". You can use th
 #### Can I do an NVRAM/PRAM reset?
 Yes, but only if you ran `PatchSystem.sh`. Afterwards you should boot into the EFI Boot on the installer USB that you held on to because you read a different question in the FAQ. If you didn't run `PatchSystem.sh` then your Mac won't boot at all without using the EFI Boot.
 
-#### WiFi doesn't work.
+#### Bluetooth/Continuity doesn't work.
 
-Did you read the second sentence? No? Okay.
+Did you read Supported Unsupported Macs details before upgrading? No? Okay.
 
 ## Support
 
