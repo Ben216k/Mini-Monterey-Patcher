@@ -314,8 +314,8 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
         if [[ "$RECOVERY" != "YES" ]]; then
             pushd "$VOLUMES/System/Library/Frameworks/WebKit.framework/Resources" > /dev/null
             echo 'Patching com.apple.WebProcess.sb...'
-            rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb" || error 'Failed to patch com.apple.WebProcess'
-            fixPerms "com.apple.WebProcess.sb" || error 'Failed to fix permissions for com.apple.WebProcess.sb'
+            rm -rf "com.apple.WebProcess.sb" && cp "$LPATCHES/SystemPatches/com.apple.WebProcess.sb" "com.apple.WebProcess.sb"
+            fixPerms "com.apple.WebProcess.sb"
             popd > /dev/null
         fi
     fi
