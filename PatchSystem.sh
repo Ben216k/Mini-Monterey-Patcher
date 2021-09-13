@@ -103,6 +103,14 @@ backupIfNeeded() {
     fi
 }
 
+backupIfNeededCP() {
+    if [[ -d "$1".original ]]; then
+        rm -rf "$1"
+    else
+        cp -a "$1" "$1".original
+    fi
+}
+
 deleteIfNeeded() {
     if [[ -d "$1" ]]; then
         rm -rf "$1" || error "Failed to remove $1"
@@ -300,7 +308,13 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
     echo "Beginning Kext Patching..."
 
     if [[ ! -z "$WIFIPATCH" ]]; then
-        backupAndPatch IO80211FamilyLegacy.kext.zip IO80211FamilyLegacy.kext YES
+        echo "Patching IO80211FamilyLegacy.kext..."
+        backupIfNeededCP "IO80211FamilyLegacy.kext"
+        /usr/libexec/PlistBuddy -c "Set :IOKitPersonalities:Broadcom\ 802.11\ PCI:IONameMatch:0 $(ioreg -r -n ARPT | grep IOName | cut -c 13- | rev | cut -c 2- | rev)" /Users/bensova/Desktop/IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext/Contents/Info.plist
+        errorCheck "Failed to patch IO80211FamilyLegacy.kext."
+        echo "Correcting permissions for IO80211FamilyLegacy.kext..."
+        fixPerms "IO80211FamilyLegacy.kext"
+        errorCheck "Failed to correct permissioms for IO80211FamilyLegacy.kext."
     fi
     
     if [[ "$HD4000" == "YES" ]]; then
