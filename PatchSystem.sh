@@ -309,8 +309,8 @@ if [[ ! "$PATCHMODE" == "UNINSTALL" ]]; then
 
     if [[ ! -z "$WIFIPATCH" ]]; then
         echo "Patching IO80211FamilyLegacy.kext..."
-        backupIfNeededCP "IO80211FamilyLegacy.kext"
-        /usr/libexec/PlistBuddy -c "Set :IOKitPersonalities:Broadcom\ 802.11\ PCI:IONameMatch:0 $(ioreg -r -n ARPT | grep IOName | cut -c 13- | rev | cut -c 2- | rev)" /Users/bensova/Desktop/IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext/Contents/Info.plist
+        backupIfNeededCP"IO80211FamilyLegacy.kext" 
+        /usr/libexec/PlistBuddy -c "Set :IOKitPersonalities:Broadcom\ 802.11\ PCI:IONameMatch:0 $(ioreg -r -n ARPT | grep IOName | cut -c 13- | rev | cut -c 2- | rev)" IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext/Contents/Info.plist
         errorCheck "Failed to patch IO80211FamilyLegacy.kext."
         echo "Correcting permissions for IO80211FamilyLegacy.kext..."
         fixPerms "IO80211FamilyLegacy.kext"
