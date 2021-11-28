@@ -1,4 +1,7 @@
 # Mini Monterey Patcher
+
+**Mini Monterey is reaching End of Life. On December 11th 2021, this repo will be archived and no further support will be provided.**
+
 A mini patcher for macOS Monterey by Ben Sova.
 
 Full support for **Mid 2013 and later**. Some support for **Early 2012 and later**.
