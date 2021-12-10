@@ -1,6 +1,9 @@
-# Mini Monterey Patcher
 
-**Mini Monterey is reaching End of Life. On December 11th 2021, this repo will be archived and no further support will be provided.**
+### Mini Monterey has reached its end of life, support will no longer be provided. Please use [OCLP](https://github.com/dortania/OpenCore-Legacy-Patcher/) instead.
+
+---
+
+# Mini Monterey Patcher
 
 A mini patcher for macOS Monterey by Ben Sova.
 
